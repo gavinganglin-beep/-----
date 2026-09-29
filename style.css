@@ -1,0 +1,111 @@
+/* 全局颜色与棋盘尺寸；小屏规则会覆盖棋盘单格尺寸。 */
+:root {
+  color-scheme: dark;
+  --ink: #171916;
+  --panel: #20231e;
+  --panel-raised: #292d26;
+  --line: #3b4038;
+  --paper: #f0f1e9;
+  --muted: #a2a89b;
+  --lime: #d5ff4f;
+  --pink: #ff6682;
+  --cyan: #5fe2d0;
+  --cell-size: min(4.3vh, 6.2vw, 34px);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--paper);
+  background-color: var(--ink);
+  background-image: radial-gradient(#353a31 0.7px, transparent 0.7px);
+  background-size: 19px 19px;
+  font-family: "Trebuchet MS", "Arial Narrow", sans-serif;
+  letter-spacing: 0;
+}
+
+button { color: inherit; font: inherit; }
+.shell { width: min(100% - 40px, 980px); margin: 0 auto; padding: 26px 0 30px; }
+.topbar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 17px; }
+.brand { display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+.brand-mark { display: grid; width: 27px; height: 27px; grid-template-columns: repeat(2, 1fr); gap: 2px; transform: rotate(-5deg); }
+.brand-mark i { background: var(--lime); }
+.brand-mark i:last-child { background: var(--pink); }
+.status { display: flex; align-items: center; gap: 8px; color: var(--muted); font: 700 11px/1 monospace; letter-spacing: .7px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 12px #d5ff4f88; }
+.intro { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding: 25px 0 20px; }
+h1 { margin: 0; font-size: clamp(28px, 5vw, 43px); line-height: 1; letter-spacing: -1.3px; }
+h1 span { color: var(--lime); }
+.intro p { margin: 0 0 2px; color: var(--muted); font-size: 13px; }
+.game-layout { display: grid; grid-template-columns: 190px auto 190px; gap: 18px; align-items: stretch; justify-content: center; }
+.side { display: flex; flex-direction: column; gap: 12px; }
+.panel { border: 1px solid var(--line); background: #20231eeF; padding: 15px; }
+.panel-label { display: flex; align-items: center; justify-content: space-between; color: var(--muted); font: 800 10px/1 monospace; letter-spacing: 1.2px; text-transform: uppercase; }
+.panel-label b { color: var(--lime); font-size: 10px; }
+.score-value { margin-top: 11px; color: var(--paper); font: 700 29px/1 monospace; font-variant-numeric: tabular-nums; }
+.mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mini-stat { border-top: 1px solid var(--line); padding-top: 10px; }
+.mini-stat span { display: block; color: var(--muted); font: 700 9px/1 monospace; letter-spacing: 1px; text-transform: uppercase; }
+.mini-stat strong { display: block; margin-top: 8px; font: 700 19px/1 monospace; }
+.preview-panel { flex: 1; min-height: 130px; }
+.preview-canvas { display: block; width: 100%; height: 100px; margin-top: 8px; }
+.hold-panel { min-height: 132px; }
+.hold-canvas { display: block; width: 100%; height: 82px; margin-top: 8px; }
+.actions { display: grid; gap: 8px; }
+.action-button { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 43px; border: 1px solid var(--line); padding: 0 12px; background: var(--panel-raised); cursor: pointer; text-align: left; transition: background .15s, border-color .15s, transform .15s; }
+.action-button:hover { border-color: var(--lime); background: #343a2a; }
+.action-button:active { transform: translateY(1px); }
+.action-button.primary { border-color: var(--lime); color: var(--ink); background: var(--lime); font-weight: 900; }
+.action-button.primary:hover { background: #e0ff80; }
+.action-button kbd { color: var(--muted); font: 10px monospace; }
+.action-button.primary kbd { color: #4c5b21; }
+.board-wrap { position: relative; border: 1px solid #59604f; padding: 7px; background: #0e100d; box-shadow: 0 16px 50px #0006; }
+#board { display: block; width: calc(var(--cell-size) * 10); height: calc(var(--cell-size) * 20); max-width: 100%; background: #171a15; }
+.overlay { position: absolute; inset: 7px; display: grid; place-content: center; justify-items: center; gap: 9px; background: #11140fdc; text-align: center; }
+.overlay[hidden] { display: none; }
+.overlay .eyebrow { color: var(--lime); font: 700 10px monospace; letter-spacing: 2px; }
+.overlay h2 { margin: 0; font-size: 25px; }
+.overlay p { margin: 0 12px; color: var(--muted); font-size: 12px; }
+.overlay button { margin-top: 7px; border: 0; padding: 11px 23px; color: var(--ink); background: var(--lime); font-weight: 900; cursor: pointer; }
+.right-panel { flex: 1; }
+.record { margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 1.65; }
+.record strong { color: var(--paper); font-family: monospace; }
+.key { display: inline-grid; min-width: 21px; height: 19px; place-items: center; margin-right: 5px; border: 1px solid #50564b; color: var(--paper); font: 10px monospace; }
+.help { display: grid; gap: 10px; margin-top: 13px; }
+.help-row { display: flex; align-items: center; color: var(--muted); font-size: 11px; }
+.touch-controls { display: none; }
+.footer { display: flex; justify-content: space-between; margin-top: 17px; color: #73796e; font: 10px monospace; letter-spacing: .7px; text-transform: uppercase; }
+
+/* 手机布局压缩侧栏，并显示触屏方向键与直接落下按钮。 */
+@media (max-width: 720px) {
+  /* 横向空间最紧张时优先缩小格子，避免棋盘被侧栏挤压变形。 */
+  :root { --cell-size: min(3.8vw, 3.7vh, 30px); }
+  .shell { width: min(100% - 24px, 510px); padding-top: 15px; }
+  .intro { padding: 19px 0 15px; }
+  .intro p { display: none; }
+  .game-layout { grid-template-columns: 1fr auto 1fr; gap: 8px; }
+  .side { gap: 8px; }
+  .panel { padding: 10px; }
+  .score-value { font-size: 21px; }
+  .preview-panel { min-height: 112px; }
+  .preview-canvas { height: 79px; }
+  .hold-panel { min-height: 105px; }
+  .hold-canvas { height: 60px; }
+  .action-button { min-height: 38px; padding: 0 8px; font-size: 12px; }
+  .action-button kbd { display: none; }
+  .help { display: none; }
+  .record { font-size: 10px; }
+  .touch-controls { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; margin-top: 13px; }
+  .touch-controls button { min-height: 43px; border: 1px solid var(--line); background: var(--panel-raised); font: 700 17px monospace; touch-action: none; }
+  .touch-controls button:active { border-color: var(--lime); color: var(--lime); }
+  .touch-controls .drop { color: var(--ink); border-color: var(--lime); background: var(--lime); }
+  .footer { margin-top: 12px; font-size: 9px; }
+}
+
+@media (max-height: 650px) and (min-width: 721px) {
+  :root { --cell-size: min(3.7vh, 5.3vw, 29px); }
+  .shell { padding-top: 14px; }
+  .intro { padding: 15px 0 12px; }
+}
